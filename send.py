@@ -74,10 +74,11 @@ def Track() :
 def update():
     stuff_to_update = ['send.py', 'Run.sh', '.version']
     for fl in stuff_to_update:
-        dat = urllib.request.urlopen("https://raw.githubusercontent.com/HACK3RY2J/Anon-SMS/master/" + fl).read()
-        file = open(fl, 'wb')
-        file.write(dat)
-        file.close()
+        dat = urllib.request.urlopen(
+            f"https://raw.githubusercontent.com/HACK3RY2J/Anon-SMS/master/{fl}"
+        ).read()
+        with open(fl, 'wb') as file:
+            file.write(dat)
     print('\n\t\tUpdated Successfull !!!!')
     print('\tRun The Script Again...')
     exit()
@@ -111,9 +112,9 @@ try:
         print('\nNotification : ' + noti + '\n')
 except Exception:
     pass
-    
-    
-    
+
+
+
 while True:
 	print("\033[0mThis Tool Is Used To Send Anonymous Messages")
 	break
@@ -124,52 +125,40 @@ try:
 except Exception:
 	type = 0
 if type == 1:
-	print("Track The Anonymous Message You Sent Using This Tool.")
-	print()
-	Track()
+    print("Track The Anonymous Message You Sent Using This Tool.")
+    print()
+    Track()
 elif type == 0:
-	while True:
-		print("Enter The Details Of The Person You Want To Send Anonymous Message")
-		cc = input("\tEnter Country Code (Without +) : ")
-		if '+' in cc:
-		        tc = list(cc)
-		        tc.remove('+')
-		        cc = ''.join(tc)
-		        cc = cc.strip()
-		if len(cc) >= 4 or len(cc) < 1:
-		        print('\n\nInvalid Country Code..\n\t\tCountry Codes Are Generally 1-3 digits...\n')
-		        continue
-		pn = input("Enter Phone Number : +" + cc + " ")
-		if len(pn) <= 6:
-		        print('\n\nInvalid Phone Number..\n')
-		        continue
-		numbe = cc + pn
-		if not numbe.isdigit():
-		            print('\n\nPhone Number Must Consist Of Numbers Only\n')
-		            continue
-		receiver = '+' + numbe
-		text = input("Enter Message to send : ")
-		
-		resp = requests.post('https://textbelt.com/text',{
-			'phone' : receiver,
-			'message' : text ,
-			'key' : 'textbelt'
-		})
-		
-		print(resp.json())
-		input('\n\n\nThank You For Using Anon-SMS\nAfter v1.45 There are Ads Enabled in this Tool.\nPress Enter To Continue to View An Ad.\n')
-		os.system('figlet -f slant Just Kidding')
-		print("There's No Ads.\nThank you for Your Time...")
-		break
-		if '"success" : true ' in resp.text:
-		    print("\033[92m Message Sent Succesfully \033[0m")
-		    input('\n\t\tPress Enter To Exit...')
-		    banner()
-		    exit()
-		if '"success" : false ' in resp.text:
-		    print("\033[91m Error Occured")
-		    print("\033[91m Failed to send SMS! ")
-		    input('\n\t\tPress Enter To Exit...')
-		    banner()
-		    exit()
-		exit() 
+    while True:
+        print("Enter The Details Of The Person You Want To Send Anonymous Message")
+        cc = input("\tEnter Country Code (Without +) : ")
+        if '+' in cc:
+                tc = list(cc)
+                tc.remove('+')
+                cc = ''.join(tc)
+                cc = cc.strip()
+        if len(cc) >= 4 or len(cc) < 1:
+                print('\n\nInvalid Country Code..\n\t\tCountry Codes Are Generally 1-3 digits...\n')
+                continue
+        pn = input(f"Enter Phone Number : +{cc} ")
+        if len(pn) <= 6:
+                print('\n\nInvalid Phone Number..\n')
+                continue
+        numbe = cc + pn
+        if not numbe.isdigit():
+                    print('\n\nPhone Number Must Consist Of Numbers Only\n')
+                    continue
+        receiver = f'+{numbe}'
+        text = input("Enter Message to send : ")
+
+        resp = requests.post('https://textbelt.com/text',{
+        	'phone' : receiver,
+        	'message' : text ,
+        	'key' : 'textbelt'
+        })
+
+        print(resp.json())
+        input('\n\n\nThank You For Using Anon-SMS\nAfter v1.45 There are Ads Enabled in this Tool.\nPress Enter To Continue to View An Ad.\n')
+        os.system('figlet -f slant Just Kidding')
+        print("There's No Ads.\nThank you for Your Time...")
+        break 
